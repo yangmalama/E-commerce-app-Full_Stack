@@ -11,7 +11,7 @@ export default function BottomNavbar() {
         <p>Home</p>
         <p>Shop</p>
         <p>Store</p>
-        <p>Mega Menu</p>
+        <p className="whitespace-nowrap">Mega Menu</p>
         <p>Pages</p>
         <p>Dashboard</p>
         <p>Docs</p>
