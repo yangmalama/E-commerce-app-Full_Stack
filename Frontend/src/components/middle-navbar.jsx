@@ -10,9 +10,11 @@ export default function MiddleNavbar() {
     <div>
       <img src={myLogo} alt="logo" />
     </div>
+
+    <div className='hidden md:block'>
     <div className="flex space-x-8">
       <input
-        className=" border border-green-500 rounded-md w-96 pl-2 "
+        className=" border border-green-500 rounded-md pl-2 "
         type="text"
         placeholder="Search Location"
       />
@@ -21,6 +23,8 @@ export default function MiddleNavbar() {
         <MapPin size={16} /> Location       
       </button>
     </div>
+    </div>
+    
 
     <div className="flex gap-4">
       <Heart />

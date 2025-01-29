@@ -1,5 +1,6 @@
 import React from "react";
-import { LayoutDashboard } from "lucide-react";
+import { LayoutDashboard, Menu } from "lucide-react";
+import { NavLink } from "react-router";
 
 export default function BottomNavbar() {
   return (
@@ -8,15 +9,21 @@ export default function BottomNavbar() {
         <button className="flex whitespace-nowrap px-4 py-2 text-white bg-green-500 rounded-lg">
           <LayoutDashboard /> All Departments
         </button>
-        <p>Home</p>
-        <p>Shop</p>
-        <p>Store</p>
-        <p className="whitespace-nowrap">Mega Menu</p>
-        <p>Pages</p>
-        <p>Dashboard</p>
-        <p>Docs</p>
-      </div>
-      <div> </div>
-    </div>
+        <div className="hidden lg:block">
+          <div className="flex items-center gap-8">
+            <p>Home</p>
+            <p>Shop</p>
+            <p>Store</p>
+            <p className="whitespace-nowrap">Mega Menu</p>
+            <p>Pages</p>
+            <NavLink to="/dashboard">Dashboard</NavLink>
+            <NavLink to="/docs">Docs</NavLink>
+            
+          </div>
+        </div>
+       </div>
+
+     <Menu className="block lg:hidden"/>    
+     </div>
   );
 }

@@ -117,7 +117,7 @@ export default function PopularProductSection() {
   return (
     <div className="w-10/12 mx-auto space-y-4 mt-24">
       <p className="text-3xl font-semibold">Popular Products</p>
-      <div className="grid grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4    2xl:grid-cols-5  gap-4 ">
         {products.map((eachItem, index) => (
           <div key={index} className="border border-gray-300 rounded-md flex flex-col items-center justify-center p-4 space-y-1.5">
             <img src={eachItem.image} alt="product" />

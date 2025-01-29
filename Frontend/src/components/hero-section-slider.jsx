@@ -16,7 +16,7 @@ export default function HeroSectionSlider() {
     <div>
       <Swiper pagination={true} modules={[Pagination]} className="mySwiper w-10/12 mx-auto rounded-md">
         <SwiperSlide>
-          <img className="h-[70vh] object-cover" src={sliderImageOne} alt="slider-image1" />
+          <img className="md:h-[70vh] object-cover" src={sliderImageOne} alt="slider-image1" />
         </SwiperSlide>
         <SwiperSlide>
           <img src={sliderImageTwo} alt="slider-image2" />
