@@ -30,7 +30,7 @@ const features = [
 
 export default function PromotionSection() {
   return (
-    <div className="max-w-6xl mx-auto py-12 px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div className="w-10/12 mx-auto py-12 px-4 bg-gray-100/50 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
       {features.map((feature, index) => (
         <div key={index} className="flex flex-col p-4">
           <div className="mr-4 py-4">{feature.icon}</div>

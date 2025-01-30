@@ -11,13 +11,13 @@ export default function AdBannerSection() {
       <div className="relative h-64 rounded-lg flex flex-col justify-between overflow-hidden ">
         <img src={myImage} alt="banner1" />
         <div className="absolute top-8 left-8">
-          <p className="text-2xl font-bold opacity-80">
+          <p className="text-lg  md:text-2xl font-bold opacity-80">
             10% cashback on <br />personal care
           </p>
           <p className="font-semibold text-lg mt-4 opacity-60">
             Max cashback: $12
           </p>
-          <p className="text-gray-600 mt-1 text-lg font-semibold">
+          <p className="text-gray-600 mt-1 text-base md:text-lg font-semibold">
             Code: <span className="font-bold">CARE12</span>
           </p>
           <button className="mt-4 px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition">
