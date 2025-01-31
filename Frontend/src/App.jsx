@@ -11,22 +11,21 @@ import WelcomeBannerSection from "./components/welcome-banner-section";
 import AdBannerSection from "./components/ad-banner-section";
 import PromotionSection from "./components/promotion-section";
 
-
 export default function App() {
   return (
     <div className="space-y-4">
-      <TopNavbar />
+      {/* <TopNavbar />
       <MiddleNavbar />
-      <BottomNavbar/>
-      <hr className="text-gray-200"/>
-      <WelcomeBannerSection/>
-      <AdBannerSection/>
-      <HeroSectionSlider/>
-      <FeatureCategoriesSection/>
-      <BannerSection/>
-      <PopularProductSection/>
-      <hr className="text-gray-200"/>
-      <PromotionSection/>
+      <BottomNavbar/> */}
+
+      <WelcomeBannerSection />
+      <AdBannerSection />
+      <HeroSectionSlider />
+      <FeatureCategoriesSection />
+      <BannerSection />
+      <PopularProductSection />
+      <hr className="text-gray-200" />
+      <PromotionSection />
     </div>
   );
 }

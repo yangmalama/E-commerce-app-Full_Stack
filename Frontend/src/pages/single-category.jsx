@@ -1,9 +1,8 @@
 import React from "react";
+import SingleProductCard from "../components/single-product-card";
 import myImage from "../../public/lays.jpg";
-import SingleProductCard from "./single-product-card";
 
-
-export default function PopularProductSection(eachItem) {
+export default function SingleCategory() {
   const products = [
     {
       image: myImage,
@@ -116,11 +115,14 @@ export default function PopularProductSection(eachItem) {
   ];
 
   return (
-    <div className="w-10/12 mx-auto space-y-4 mt-24">
-      <p className="text-3xl font-semibold">Popular Products</p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4    2xl:grid-cols-5  gap-4 ">
+    <div className="w-10/12 mx-auto">
+      <div className="bg-gray-300 py-24 text-5xl font-semibold text-center">
+        Snacks and Munchies
+      </div>
+      {/* List of products */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5  gap-4">
         {products.map((eachItem, index) => (
-          <SingleProductCard eachItem={eachItem} key={index} />
+          <SingleProductCard eachItem={eachItem} key={index} /> //Props passing
         ))}
       </div>
     </div>
