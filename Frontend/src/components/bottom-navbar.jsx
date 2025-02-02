@@ -11,11 +11,11 @@ export default function BottomNavbar() {
         </button>
         <div className="hidden lg:block">
           <div className="flex items-center gap-8">
-            <p>Home</p>
-            <p>Shop</p>
-            <p>Store</p>
-            <p className="whitespace-nowrap">Mega Menu</p>
-            <p>Pages</p>
+            <NavLink to="/">Home</NavLink>
+            <NavLink to="/shop">Shop</NavLink>
+            <NavLink to="/Stores">Stores</NavLink>
+            <NavLink  to="/MegaMenu">Mega Menu</NavLink>
+            <NavLink to="/pages">Pages</NavLink>
             <NavLink to="/dashboard">Dashboard</NavLink>
             <NavLink to="/docs">Docs</NavLink>
             

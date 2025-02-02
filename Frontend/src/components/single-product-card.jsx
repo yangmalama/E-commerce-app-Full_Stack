@@ -1,10 +1,11 @@
 import React from "react";
 import ReactStars from "react-stars";
 import myImage from "../../public/lays.jpg";
+import {NavLink} from "react-router"
 
 export default function SingleProductCard({eachItem}) {
   return (
-    <div>
+    <NavLink to={`/shop/${eachItem.name}`}>
       <div className=" border border-gray-300 rounded-md flex  flex-col items-center justify-center  p-4 space-y-1.5  ">
         <img src={myImage} alt="" />
         <p className=" font-semibold opacity-50 text-xs">{eachItem.category}</p>
@@ -23,6 +24,6 @@ export default function SingleProductCard({eachItem}) {
         </div>
               
       </div>
-    </div>
+    </NavLink>
   );
 }
