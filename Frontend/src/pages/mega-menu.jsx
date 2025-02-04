@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function MegaMenu() {
   return (
-    <div>Mega Menu</div>
+    <div className='w-10/12 mx-auto'>Mega Menu</div>
   )
 }
