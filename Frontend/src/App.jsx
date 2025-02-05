@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.CSS";
 import TopNavbar from "./components/top-navbar";
 import MiddleNavbar from "./components/middle-navbar";
 import BottomNavbar from "./components/bottom-navbar";

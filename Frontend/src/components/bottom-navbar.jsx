@@ -18,7 +18,8 @@ export default function BottomNavbar() {
             <NavLink to="/pages">Pages</NavLink>
             <NavLink to="/dashboard">Dashboard</NavLink>
             <NavLink to="/docs">Docs</NavLink>
-            
+            <NavLink to="/sign_in">Sign In</NavLink>
+            <NavLink to="/sign_up">Sign Up</NavLink>
           </div>
         </div>
        </div>

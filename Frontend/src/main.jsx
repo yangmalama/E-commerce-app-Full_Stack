@@ -15,6 +15,9 @@ import Stores from "./pages/stores.jsx";
 import MegaMenu from "./pages/mega-menu.jsx";
 import Pages from "./pages/pages.jsx";
 import ProductDescription from "./pages/product-description.jsx";
+import SignIn from "./pages/sign-in.jsx";
+import SignUp from "./pages/sign-up.jsx";
+import Reset_Password from "./components/forget-password.jsx";
 
 
 // createRoot(document.getElementById("root")).render(
@@ -48,7 +51,7 @@ export function Root(){
   
   return (
     <StrictMode>
-     {location.pathname !== "/pages" && <div className="space-y-6"> 
+     {location.pathname !== "/sign_in" && location.pathname !== "/sign_up" && location.pathname !== "/reset_password" && <div className="space-y-4"> 
         <TopNavbar />
         <MiddleNavbar />
         <BottomNavbar />
@@ -63,8 +66,10 @@ export function Root(){
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/docs" element={<Docs />} />
         <Route path="/categories/:id" element={<SingleCategory />} />
-
         <Route path="/shop/:id" element={<ProductDescription />} />
+        <Route path="/sign_in" element={<SignIn/>} />
+        <Route path="/sign_up" element={<SignUp />} />
+        <Route path="/reset_password" element={<Reset_Password />} />
       </Routes>
       <Footer />
   </StrictMode>
