@@ -5,10 +5,10 @@
 
 Steps to create backend server
 1. Create a backend folder and go inside it 
-2. npm init -y4
+2. npm init -y
 3. npm i express
 4. npm i mongoose
-5. add  "type":"module" at package.json
+5. add  "type":"module" at package.json to add module  
 npm i -g nodemon
 6. npm i nodemon keeps the server running after changes(nodemon server.js)
 
