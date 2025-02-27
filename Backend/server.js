@@ -1,5 +1,9 @@
 import express from "express";
 import mongoose from "mongoose";
+import { Product } from "./schema/productSchema.js";
+import { Category } from "./schema/categorySchema.js";
+import multer from 'multer'
+const upload = multer({ dest: 'uploads/' })
 
 // configure the server
 const app = express();
@@ -8,7 +12,6 @@ const app = express();
 app.use(express.json());
 
 // connect databasen MongoDB
-
 try {
   mongoose.connect(
     "mongodb+srv://yangmalama02:l7uajwH8QK5sTMdZ@cluster0.hqc45.mongodb.net/ecommerce-db?retryWrites=true&w=majority&appName=Cluster0"
@@ -18,19 +21,7 @@ try {
   console.log("MongoDB connection error!, error");
 }
 
-// table schema
-// Product schema items for the product table
-const productSchema = new mongoose.Schema({
-  name: { type: String, required: true, unique: true },
-  description: { type: String, required: false },
-  price: { type: Number, required: true },
-  previousPrice: { type: Number, required: true },
-  imageUrl: { type: String, required: true },
-  category: { type: String, required: true },
-});
 
-// make product table
-const Product = mongoose.model("Product", productSchema);
 
 // create a product
 app.post("/products", async (req, res) => {
@@ -86,22 +77,35 @@ app.get("/products/:id", async (req, res) => {
 });
 
 // update the product
-app.patch("/products:id", async (req, res) => {
-  res.send("");
+app.patch("/products/:id", async (req, res) => {
+  try {
+    const updateProduct = await Product.findByIdAndUpdate(req.params.id, req.body, {new:true})
+    if(!updateProduct){
+      return res.status(404).json({
+      message: "Product not found!!!!!!!!!!",
+      })
+    }
+    return res.status(200).json({
+      message: "Product Updated!!!!!!!!!!",
+      data: updateProduct
+    })
+  } catch (error) {
+    return res.status(500).json({ message: "Internal Server error" });
+  }
 });
 
 // delete product
 app.delete("/products/:id", async (req, res) => {
   try {
-    const checkProduct= await Product.findById(req.params.id)
-   if(!checkProduct){
-    return res.status(404).json({
-      message: "Product not found",
-      data: checkProduct,
-   } )
-  }
+    const checkProduct = await Product.findById(req.params.id);
+    if (!checkProduct) {
+      return res.status(404).json({
+        message: "Product not found",
+        data: checkProduct,
+      });
+    }
 
-    const deletedProduct = await Product.findByIdAndDelete(req.params.id)
+    const deletedProduct = await Product.findByIdAndDelete(req.params.id);
     return res.status(200).json({
       message: "Procduct deleted sucessfully",
       data: deletedProduct,
@@ -113,17 +117,100 @@ app.delete("/products/:id", async (req, res) => {
   }
 });
 
-app.get("/", (req, res) => {
-  res.send("Server is okokokokokokkkkk....");
+
+// Category CRUD
+app.post("/categories", upload.single('imageUrl'), async (req, res) => {
+  try {
+    // Handle the image upload before saving to database
+    console.log(req.file)
+
+
+
+    // check if category name already exists
+    const categoryExist = await Category.findOne({ name: req.body.name });
+    if (categoryExist) {
+      return res.status(409).json({ message: "Category already exist" });
+    }
+    const newCategory = await new Category(req.body).save();
+    return res.status(201).json({
+      message: "Category created sucessfully",
+      data: newCategory,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal Server error" });
+  }
 });
 
-app.get("/students", (req, res) => {
-  res.send("100 students here Bye");
+app.get("/categories", async (req, res) => {
+  try {
+    const allCategories = await Category.find();
+    return res.status(200).json({
+      message: "All categories fetched sucessfully",
+      data: allCategories,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal Server error" });
+  }
 });
+
+app.get("/categories/:id", async (req, res) => {
+  try {
+    const singleCategory = await Category.findById(req.params.id);
+    if (!singleCategory) {
+      return res.status(404).json({
+        message: "Category not found",
+      });
+    }
+    return res.status(200).json({
+      message: "Sinlge Category fetcheed sucessfully",
+      data: singleCategory,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal Server error" });
+  }
+});
+
+app.patch("/categories/:id", async (req, res) => {
+  try {
+    const updatedCategory = await Category.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    return res.status(200).json({
+      message: "Category updated",
+      data: updatedCategory,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal Server error" });
+  }
+});
+
+app.delete("/categories/:id", async (req, res) => {
+  try {
+    const deletedCategory = await Category.findByIdAndDelete(req.params.id);
+    if (!deletedCategory) {
+      return res.status(404).json({
+        message: "Category doesnot exist",
+      });
+    }
+    return res.status(200).json({
+      message: "Category Deleted sucessfully!!",
+      data: deletedCategory,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal Server error" });
+  }
+});
+
 
 // check user
 // check database
 // Configure server+
+
+app.get("/", (req, res) => {
+  res.send("Server is okokokokokokkkkk....");
+});
 
 app.listen(4000, () => {
   console.log("Server started at http://localhost:4000");
