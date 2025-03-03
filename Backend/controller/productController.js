@@ -1,5 +1,5 @@
+import cloudinary from "../lib/cloudinaryConfig.js";
 import { Product } from "../schema/productSchema.js";
-
 
 // create a product
 export const createProduct = async (req, res) => {
@@ -11,7 +11,15 @@ export const createProduct = async (req, res) => {
         message: " Produt name already taken , select different name",
       });
     }
-    const newProduct = await new Product(req.body).save();
+
+    // upload the image in cloudinary url and get the url
+    const cloudinaryResponse = await cloudinary.uploader.upload(req.file.path);
+    console.log(cloudinaryResponse);
+
+    const newProduct = await new Product({
+      ...req.body,
+      imageUrl: cloudinaryResponse.secure_url,
+    }).save();
     return res.status(201).json({
       message: "Product created sucessfully",
       data: newProduct,
@@ -25,7 +33,7 @@ export const createProduct = async (req, res) => {
 };
 
 // get all products
-export const getAllProducts =  async (req, res) => {
+export const getAllProducts = async (req, res) => {
   try {
     const allProduct = await Product.find();
     return res.status(200).json({
@@ -40,7 +48,7 @@ export const getAllProducts =  async (req, res) => {
 };
 
 // Get single product
-export const getProductsById =  async (req, res) => {
+export const getProductsById = async (req, res) => {
   try {
     const singleProduct = await Product.findById(req.params.id);
     return res.status(200).json({
@@ -55,29 +63,49 @@ export const getProductsById =  async (req, res) => {
 };
 
 // update the product
-export const updateProductById =  async (req, res) => {
+export const updateProductById = async (req, res) => {
   try {
-    const updateProduct = await Product.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-    if (!updateProduct) {
-      return res.status(404).json({
-        message: "Product not found!!!!!!!!!!",
+    // check product name is alrady taken or not
+
+    if (req.file) {
+      const cloudinaryResponse = await cloudinary.uploader.upload(
+        req.file.path
+      );
+      const updateProduct = await Product.findByIdAndUpdate(
+        req.params.id,
+        { ...req.body, imageUrl: cloudinaryResponse.secure_url },
+        { new: true }
+      );
+      if (!updateProduct) {
+        return res.status(404).json({
+          message: "Product not found!!!!!!!!!!",
+        });
+      }
+      return res.status(200).json({
+        message: "Product Updated!!!!!!!!!!",
+        data: updateProduct,
       });
+    }
+
+    //if image is not uploaded then do not handle upload
+    const updatedProduct = await Product.findByIdAndUpdate(req.params.id, req.body, {new:true})
+    if (!updatedProduct){
+      return res.status(404).json({
+        message:"Product not found"
+      })
     }
     return res.status(200).json({
       message: "Product Updated!!!!!!!!!!",
       data: updateProduct,
     });
+
   } catch (error) {
     return res.status(500).json({ message: "Internal Server error" });
   }
 };
 
 // delete product
-export const deleteProductById =  async (req, res) => {
+export const deleteProductById = async (req, res) => {
   try {
     const checkProduct = await Product.findById(req.params.id);
     if (!checkProduct) {
