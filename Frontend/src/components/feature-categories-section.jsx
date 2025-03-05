@@ -5,8 +5,16 @@ import "swiper/css/pagination";
 
 import { Pagination } from "swiper/modules";
 import myimage from "../../public/lays.jpg";
+import { useState } from "react";
 
 export default function FeatureCategoriesSection() {
+  // useState hooks
+  const[ name,setName] = useState("Yangma Lama")
+  // const[ varibale name,setter function] = useState("initial value")
+  const handleChangeName=()=>{
+    setName("yangma lama change")
+  }
+
 
   const categories = [
     {
@@ -46,6 +54,8 @@ export default function FeatureCategoriesSection() {
 
   return (
     <div className=" w-10/12 mx-auto md:space-y-4 mt-24">
+      {name}
+      <button className="bg-green-500" onClick={handleChangeName}>Change name</button>
       <p className=" text-3xl font-semibold ">Featured Categories</p>
       <div>
         <Swiper
