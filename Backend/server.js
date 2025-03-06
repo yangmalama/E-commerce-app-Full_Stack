@@ -4,6 +4,7 @@ import "dotenv/config";
 import categoryRoute from "./routes/categoryRoute.js";
 import productRoute from "./routes/productRoute.js";
 import userRoute from "./routes/userRoute.js";
+import cors from "cors"
 
 // configure the server
 const app = express();
@@ -11,6 +12,7 @@ const app = express();
 // middleware json
 app.use(express.json());
 
+app.use(cors())
 // connect database MongoDB
 try {
   mongoose.connect(process.env.MONGO_URI);
