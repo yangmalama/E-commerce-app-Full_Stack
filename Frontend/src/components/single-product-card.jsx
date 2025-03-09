@@ -5,9 +5,9 @@ import {NavLink} from "react-router"
 
 export default function SingleProductCard({eachItem}) {
   return (
-    <NavLink to={`/shop/${eachItem.name}`}>
+    <NavLink to={`/shop/${eachItem._id}`}>
       <div className=" border border-gray-300 rounded-md flex  flex-col items-center justify-center  p-4 space-y-1.5  ">
-        <img src={myImage} alt="" />
+        <img className= "h-44"src={eachItem.imageUrl} alt="" />
         <p className=" font-semibold opacity-50 text-xs">{eachItem.category}</p>
         <p className=" font-semibold text-sm">{eachItem.name}</p>
         <div className=" flex items-center gap-2">

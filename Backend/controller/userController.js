@@ -56,16 +56,19 @@ export const loginUser = async (req, res) => {
     }
 
     // if password matched generate the token
-    const myToken = jwt.sign({email: userExist.email}, "this is private_key", {
-      expiresIn: "24h",
-    });
+    const myToken = jwt.sign(
+      { email: userExist.email },
+      "this is private_key",
+      {
+        expiresIn: "24h",
+      }
+    );
     console.log(myToken);
     return res.status(201).json({
       message: "User logged in sucessfully",
       token: myToken,
-      user: userExist
-    })
-
+      user: userExist,
+    });
   } catch (error) {
     return res.status(500).json({
       message: " error in user login",
@@ -109,6 +112,24 @@ export const getUserById = async (req, res) => {
 //update user by id
 export const updateUserById = async (req, res) => {
   try {
+    // if password is given for update
+    if (registerUser.body.password) {
+      const newHashedPassword = await bcrypt.hash(
+        req.body.password,
+        saltRounds
+      );
+      const updateedUser = await User.findOneAndUpdate(
+        req.body.email,
+        { ...req.body, password: newHashedPassword },
+        { new: true }
+      );
+      return res.status(200).json({
+        message: "User updated password",
+        data: updateUser,
+        error: error,
+      });
+    }
+
     const updateUser = await User.findByIdAndUpdate();
     return res.status(200).json({
       message: "User update sucessfull!!",
