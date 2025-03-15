@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import axios from "axios"
+import React, { useEffect, useState } from "react";
+import { LoaderCircle } from "lucide-react";
+import axios from "axios";
 
 export default function Dashboard() {
   const [name, setName] = useState("");
@@ -8,11 +9,13 @@ export default function Dashboard() {
   const [previousPrice, setPreviousPrice] = useState(null);
   const [category, setCategory] = useState("");
   const [image, setImage] = useState(null);
+  const [isSubmitting, setSubmitting] = useState(false);
 
   // console.log(title, description,price,previousPrice,category,image)
   const createProduct = async (e) => {
     e.preventDefault();
     try {
+      setSubmitting(true);
       const formData = new FormData();
       formData.append("name", name);
       formData.append("description", description);
@@ -26,11 +29,33 @@ export default function Dashboard() {
         formData
       );
       console.log(response);
+      setSubmitting(false);
+      setName("");
+      setDescription("");
+      setPrice("");
+      setPreviousPrice("");
+      setCategory("");
     } catch (error) {
       console.log("Something went wrong", error);
+      setSubmitting(false);
     }
   };
 
+  // fetch all products
+  const [allProducts, setAllProducts] = useState();
+  const fetchAllProducts = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/products");
+      setAllProducts(response.data.data);
+    } catch (error) {
+      console.log("Something went wrong, error");
+    }
+  };
+
+  useEffect(() => {
+    fetchAllProducts();
+  }, []);
+  console.log(allProducts)
   return (
     <div className="w-10/12 mx-auto">
       <form
@@ -83,9 +108,11 @@ export default function Dashboard() {
         />
         <button
           type="submit"
-          className="bg-green-500 border-none text-white border border-gray-400 p-2 rounded-md"
+          disabled={isSubmitting}
+          className="bg-green-500 border-none text-white border border-gray-400 p-2 rounded-md flex items-center justify-center gap-1"
         >
-          Create Product
+          {isSubmitting && <LoaderCircle className="animate-spin" />}
+          <span> Create Product</span>
         </button>
       </form>
     </div>
